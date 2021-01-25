@@ -1,6 +1,7 @@
 const request = require('request')
 // const chalk = require('chalk')
 const getWeather = require('./utils/getWeather')
+const getAddress = require('./utils/getAddress') 
 
 // const success = chalk.green
 // const value = chalk.bgRed
@@ -20,10 +21,14 @@ const location = process.argv[2]
 if(!location){
     console.log('Please Enter Address')
 }else{
-        
-    getWeather.getWeather(location,(error, {latitude,longitude,humidity,temperature})=>{
-        console.log('Error',error)
-        console.log('latitude and longitude are Latitude: '+latitude+'Longitude :'+longitude+' it is '+ temperature + ' celcius temperature in '+location + ' , there is '+humidity + '% humidity in air.')
-    })
-
+    
+    getWeather.getWeather(location,(error,{latitude,longitude})=>{
+        console.log(error)
+        console.log(latitude + ' ' + longitude)
+        getAddress.getAddress(latitude,longitude,(error, {latitude,longitude,city,description,temperature,code})=>{
+            console.log(error)
+            console.log(description)
+        })
+    
+    })   
 }
